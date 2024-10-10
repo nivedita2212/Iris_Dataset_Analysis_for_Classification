@@ -1,0 +1,242 @@
+---
+title: "Analysis Of Iris Dataset"
+author: "Nivedita Pandey"
+date: "2024-02-09"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = TRUE, echo = FALSE)
+```
+
+### Objective
+
+To perform data analysis on iris data set for identifying the effective classification characteristic for different flower species
+
+### Analysis
+
+Iris data set consists of 50 samples from each of the three sub-species ( iris setosa, iris virginica, and iris versicolor). Four features were measured in centimeters (cm): the lengths and the widths of both sepals and petals.
+
+```{r , echo=TRUE}
+View(iris) # show as a spreadsheet
+```
+
+```{r , echo=TRUE}
+class(iris) # show the data type
+```
+
+```{r , echo=TRUE}
+head(iris) # first few rows
+```
+
+```{r , echo=TRUE}
+str(iris)
+```
+
+The imported data is stored in a data frame called iris, which contains information of 5 variables for 150 observations (flowers). While the first 4 variables/columns, Sepal.Length, Sepal.Width, Petal.Length, and Petal.Width, contain numeric values. The 5th variable/column, Species, contains characters indicating which sub-species a sample belongs to.
+
+
+
+First we will use summary function so that we can quickly summarize the data set and it will provide us information on the distribution of each variables. 
+```{r , echo=TRUE}
+summary(iris)
+```
+
+This illustrates how well-balanced the species are. Each species (Iris virginica, setosa, and versicolor) has a count of 50. The mean of the Sepal length is greater than the mean of the other three measurements and petal width has the lowest average measurements.The shortest petal in the data set is 1 cm while the longest petal is 6.9 cm and the shortest sepal in the data set is 4.3 cm while the longest sepal is 7.9 cm. The widths of the petals and sepals vary from 0.1 cm to 2.5 cm and 2 cm to 4.4 cm respectively.
+
+
+Now we will plot box plot as a box plot is extremely effective mechanism to get a one shot view and understand the nature of data. It displays a summary of a large amount of data in five numbers — minimum, lower quartile (25th percentile), median(50th percentile), upper quartile (75th percentile) and maximum data values.
+
+First we will plot for all quantitative variables, to get picture of all Quantitative variables
+
+```{r , echo=FALSE}
+boxplot(iris[1:4],main='Box Plot of lengths and the widths of both sepals and petals')
+```
+
+`Fig 1.1 Box plot of lengths and the widths of both sepals and petals`
+
+From Fig 1.1 we can interprete the boxplot of lengths and the widths of both sepals and petals as follows
+
+In sepal length the central rectangle or the box spans from frist quartile, 5.1 to third quartile 6.4, then the Inther Quartile Range (IQR) will be 1.3 and median is given by the line or band within the box which is 5.8. 
+
+In sepal width first and third quartiles are 2.8 and 3.3 respectively that means 25% of the data falls below 2.8 and 75% of the data falls below 3.3. Also IOR is 0.5 and median is 3. Also many outliers are present in sepal width.
+
+In petal length first and third quartiles are 1.6 and 5.1 respectively that means 25% of the data falls below 1.6 and 75% of the data falls below 5.1 Also IOR is 3.5 and median is 4.3.
+
+In petal width first and third quartiles are 0.3 and 1.8 respectively that means 25% of the data falls below 0.3 and 75% of the data falls below 1.8 Also IOR is 1.5 and median is 1.3.
+
+Also distribution of sepal length and sepal width are normally distributed while petal length and petal width are negatively skewed.
+
+```{r , echo=FALSE}
+data<-iris
+d1<-data$Sepal.Length[data$Species=='setosa']
+d2<-data$Sepal.Length[data$Species=='versicolor']
+d3<-data$Sepal.Length[data$Species=='virginica']
+sl<-data.frame(setosa=d1,versicolor=d2,virginica=d3)
+boxplot(sl, main='Box plot of Sepal Length')
+```
+
+`Fig 1.2 Box Plot of Sepal length`
+
+From Fig 1.2 For setosa we can observe The sepal length of setosa, versicolor, virginica approximately lies between 4.3 to 5.8, 4.9 to 7, 5.6 to 7.9 respectively. In box plot of virginica one observation is coming beyond the lower whisker so one value is unusually low value so one outlier is present in the data set of sepal length of virginica.
+
+```{r , echo=FALSE}
+data<-iris
+a1<-data$Sepal.Width[data$Species=='setosa']
+a2<-data$Sepal.Width[data$Species=='versicolor']
+a3<-data$Sepal.Width[data$Species=='virginica']
+sw<-data.frame(setosa=a1,versicolor=a2,virginica=a3)
+boxplot(sw, main='Box Plot of Sepal Width')
+```
+
+
+`Fig 1.3 Box Plot of Sepal Width`
+
+From Fig 1.3 we can observe that the sepal width of setosa, versicolor, virginica approximately lies between 2.9 to 4.4, 2 to 3.4, 2.3 to 3.7 respectively. In box plot of setosa one observation is coming beyond the lower whisker so one value is unusually low value so one outlier is present in the data set of sepal width of setosa.
+
+```{r , echo=FALSE}
+data<-iris
+b1<-data$Petal.Width[data$Species=='setosa']
+b2<-data$Petal.Width[data$Species=='versicolor']
+b3<-data$Petal.Width[data$Species=='virginica']
+sw<-data.frame(setosa=b1,versicolor=b2,virginica=b3)
+boxplot(sw, main='Box Plot of Petal Width')
+```
+
+`Fig 1.4 Box Plot of Petal Width`
+
+From Fig 1.4 we can observe that the petal width of setosa, versicolor, virginica approximately lies between 0.1 to 0.4, 1 to 1.8, 1.4 to 2.5 respectively. In box plot of setosa two observations are coming beyond the upper whisker so two values are unusually high value so two outliers are present in the data set of petal width of setosa.
+
+```{r , echo=FALSE}
+data<-iris
+c1<-data$Petal.Length[data$Species=='setosa']
+c2<-data$Petal.Length[data$Species=='versicolor']
+c3<-data$Petal.Length[data$Species=='virginica']
+sw<-data.frame(setosa=c1,versicolor=c2,virginica=c3)
+boxplot(sw, main='Box Plot of Petal Length')
+```
+
+
+`Fig 1.5 Box Plot of Petal Length`
+
+From Fig 1.5 we can observe that the petal length of setosa, versicolor, virginica approximately lies between 1 to 2, 3.2 to 5, 4.5 to 6.9 respectively. In box plot of setosa and versicolor one observation is coming beyond the lower whisker so one value is unusually low value so one outlier is present in the data set of petal length of setosa and versicolor.
+
+Now we will make bivariate table 
+```{r,echo=FALSE}
+#bivariate table
+iris$Sepal.Length.Intervals<-cut(iris$Sepal.Length,breaks = c(4,4.5,5,5.5,6,6.5,7,7.5,8),labels=c('4-4.5','4.5-5','5-5.5','5.5-6','6-6.5','6.5-7','7-7.5','7.5-8'))
+table(iris$Species,iris$Sepal.Length.Intervals)
+```
+
+`Table 1.1 Table for Sepal length of three species in iris dataset`
+
+```{r,echo=FALSE}
+iris$Sepal.Width.Intervals<-cut(iris$Sepal.Width,breaks = c(1.5,2,2.5,3,3.5,4,4.5),
+                                 labels=c('1.5-2','2-2.5','2.5-3','3-3.5','3.5-4','4-4.5'))
+table(iris$Species,iris$Sepal.Width.Intervals)
+```
+`Table 1.2 Table for Sepal width of three species in iris dataset`
+
+```{r,echo=FALSE}
+iris$Petal.Width.Intervals<-cut(iris$Petal.Width,breaks = c(0,0.5,1,1.5,2,2.5),
+                                labels=c('0-0.5','0.5-1','1-1.5','1.5-2','2-2.5'))
+table(iris$Species,iris$Petal.Width.Intervals)
+```
+
+`Table 1.3 Table for Petal width of three species in iris dataset`
+
+```{r,echo=FALSE}
+iris$Petal.Length.Intervals<-cut(iris$Petal.Length,breaks = c(0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,5.5,6,6.5,7,7.5),
+                                labels=c('0.5-1','1-1.5','1.5-2','2-2.5','2.5-3','3-3.5','3.5-4','4-4.5','4.5-5','5-5.5','5.5-6','6-6.5','6.5-7','7-7.5'))
+table(iris$Species,iris$Petal.Length.Intervals)
+```
+
+`Table 1.4 Table for Petal length of three species in iris dataset`
+
+From Table 1.1 and 1.2 we can see that Sepal length and width of all species are overlapping to each other. 
+
+From Table 1.3 to Table 1.4 we can see that  petal length & petal width of setosa is smaller than 2 centimeters and 0.5 centimeters respectively. Petal length and width of verginica is from 5.5 to 7 centimeters and  from 1 to 2.5 centimeters respectively whereas petal length and width of versicolor lies between setosa and verginica. So we can say that setosa have smaller petal length, petal width and sepal length as compared to verginica.
+
+
+We will use density plot for observing the distribution of length and width of sepal and petal of all three species.
+
+```{r , echo=FALSE}
+#density of sepal length
+plot(density(d1),lwd=2,col='red',xlim=c(4,9),main='Density Plot of Sepal Length')
+lines(density(d2),col='green',lwd=2)
+lines(density(d3),lwd=2)
+legend('topright',col=c('red','green','black'),lty=c(1,1,1),legend=c('setosa','versicolor','verginica'))
+```
+
+`Fig 1.6 Density Plot of Sepal Length`
+
+From Fig 1.6  which is density plot of sepal length of three species we can observe that it demonstrates that the density plot overlap between the species in terms of sepal length, indicating that it is ineffective as a classification characteristic.
+
+```{r , echo=FALSE}
+#density of sepal width
+plot(density(a1),col='red',xlim=c(1.5,6),main='Density Plot of Sepal Width',ylim=c(0,1.5),lwd=2)
+lines(density(a2),col='green',lwd=2)
+lines(density(a3),lwd=2)
+legend('topright',col=c('red','green','black'),lty=c(1,1,1),legend=c('setosa','versicolor','verginica'))
+```
+
+`Fig 1.6 Density Plot of Sepal Width`
+
+From Fig 1.6 which is density plot of sepal width we can observe that sepal width can not be used as diffrentiator for any of the three species as density plot of sepal width of all three species setosa, versicolor and verginica more overlap between the species that mean sepal length for all three species lies in approximately same range.
+
+
+```{r , echo=FALSE}
+#density of petal width
+plot(density(b1),col='red',xlim=c(0,3),main='Density plot of Petal Width',ylim=c(0,8),lwd=2)
+lines(density(b2),col='green',lwd=2)
+lines(density(b3),lwd=2)
+legend('topright',col=c('red','green','black'),lty=c(1,1,1),legend=c('setosa','versicolor','verginica'))
+```
+
+`Fig 1.7 Density Plot of Petal Width`
+
+From the density plot of Petal width for all species in Fig 1.7 we can observe that petal width of setosa is very small as compared to versicolor and verginica. Also sepal length of versicolor is smaller than verginica. Petal width can be used as a diffrentiator for all species as the overlap is little (between Versicolor and Virginica), while Setosa is well separated from the other two.
+
+
+```{r , echo=FALSE}
+#density of petal length
+plot(density(c1),col='red',xlim=c(0.5,8),main ='Density plot of Petal Length',ylim=c(0,3),lwd=2)
+lines(density(c2),col='green',lwd=2)
+lines(density(c3),lwd=2)
+legend('topright',col=c('red','green','black'),lty=c(1,1,1),legend=c('setosa','versicolor','verginica'))
+```
+
+`Fig 1.8 Density Plot of Petal Length`
+
+From the density plot of petal length in Fig 1.8 we can observe similar result as petal width that petal length of setosa is smaller than versicolor and verginica and petal length of versicolor is smaller than verginica. Also the overlap is little (between Versicolor and Virginica), while Setosa is well separated from the other two. So petal width and petal length can be used as a diffrentiator for all species.
+
+Now we will use scatter plot between sepal length, sepal width and between petal length petal width for three species to get more clear picture.
+
+```{r , echo=FALSE}
+#plot of petal length and petal width
+par(mfrow=c(1,1))
+plot(iris$Petal.Length, iris$Petal.Width, pch=19, col=c("gold1","red4","hotpink")[unclass(iris$Species)], main="Scatter Plot of Petal Length and Width", xlab='Petal Length' , ylab='Petal Width')
+legend('topleft',col=c("gold1","red4","hotpink"),pch=19,legend = c('setosa','versicolor','verginica'))
+```
+
+`Fig 1.8 Scatter Plot of Petal Length and Width`
+
+From Fig 1.8 we observe that Setosa has the shortest petal length and width. Petal length and width are normal for the Versicolor species. Virginica species have the maximum petal length and width. Petal length and width of setosa is smallest and verginica is largest. Petal length and width are diffrentiatinng the three species clearly from each other.
+
+```{r , echo=FALSE}
+#plot of sepal length and sepal width
+par(mfrow=c(1,1))
+plot(iris$Sepal.Length, iris$Sepal.Width, pch=19, col=c("gold1","red4","hotpink")[unclass(iris$Species)], main="Fig 1.8 Scatter Plot of Sepal Length and Width",xlim = c(3,8),xlab='Sepal Length' , ylab='Sepal Width')
+legend('topleft',col=c("gold1","red4","hotpink"),pch=19,legend = c('setosa','versicolor','verginica'))
+
+```
+
+`Fig 1.8 Scatter Plot of Sepal Length and Width`
+
+From Fig 1.8 we can see that Setosa has shorter sepals but wider petals. Versicolor is almost in the center in both length and width of sepal. Virginica has longer sepals and narrower sepals. Only  setosa can be differentiated from other species but versicolor and verginica can not be diffrentiated.
+
+### Conclusion
+
+From all the above analysis we can conclude that petal length and petal width can be used as effective classification characteristic for all three species of iris which are setosa versicolor and verginica. We can distinguish the setosa species effortlessly using length and width of sepal and petals but the Versicolor and Virginica species are frequently combined and can be difficult to distinguish.
